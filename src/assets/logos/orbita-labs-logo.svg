@@ -1,0 +1,8 @@
+<svg width="240" height="56" viewBox="0 0 240 56" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <circle cx="24" cy="24" r="5" fill="#F2B705"/>
+    <ellipse cx="24" cy="24" rx="20" ry="8" stroke="#F2B705" stroke-width="3" fill="none"/>
+    <ellipse cx="24" cy="24" rx="20" ry="8" stroke="#F2B705" stroke-width="3" fill="none" transform="rotate(60 24 24)"/>
+  </g>
+  <text x="54" y="34" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#F5F3F7"><tspan fill="#F2B705">Ó</tspan>rbita Labs</text>
+</svg>

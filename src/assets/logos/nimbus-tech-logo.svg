@@ -1,0 +1,9 @@
+<svg width="240" height="56" viewBox="0 0 240 56" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <circle cx="24" cy="20" r="10" fill="#5B8DEF"/>
+    <circle cx="34" cy="26" r="13" fill="#5B8DEF"/>
+    <circle cx="14" cy="28" r="8" fill="#5B8DEF"/>
+    <rect x="6" y="26" width="36" height="10" rx="5" fill="#5B8DEF"/>
+  </g>
+  <text x="54" y="34" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#F5F3F7">Nimbus<tspan fill="#5B8DEF">Tech</tspan></text>
+</svg>

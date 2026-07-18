@@ -17,4 +17,6 @@ export const standardTheme = {
 	headingFont: "'Space Grotesk', sans-serif",
 	bodyFont: "'Inter', sans-serif",
 	monoFont: "'Space Mono', monospace",
+	arcadeFont: "'Press Start 2P', monospace",
+	impactFont: "'Bangers', cursive",
 };

@@ -2,6 +2,8 @@ import { ThemeProvider } from 'styled-components';
 import { About } from './components/About/About';
 import { Header } from './components/Header/Header';
 import { Hero } from './components/Hero/Hero';
+import { Mentors } from './components/Mentors/Mentors';
+import { Partners } from './components/Partners/Partners';
 import { Programs } from './components/Programs/Programs';
 import { Students } from './components/Students/Students';
 import { GlobalStyles } from './styles/globalStyles';
@@ -16,6 +18,8 @@ function App() {
 			<About />
 			<Programs />
 			<Students />
+			<Partners />
+			<Mentors />
 		</ThemeProvider>
 	);
 }
