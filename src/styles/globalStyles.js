@@ -32,4 +32,8 @@ export const GlobalStyles = createGlobalStyle`
     ul, ol {
         list-style: none;
     }
+
+    section {
+        scroll-margin-top: 96px;
+    }
 `;

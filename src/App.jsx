@@ -1,5 +1,7 @@
 import { ThemeProvider } from 'styled-components';
 import { About } from './components/About/About';
+import { CTA } from './components/CTA/CTA';
+import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
 import { Hero } from './components/Hero/Hero';
 import { Mentors } from './components/Mentors/Mentors';
@@ -20,6 +22,8 @@ function App() {
 			<Students />
 			<Partners />
 			<Mentors />
+			<CTA />
+			<Footer />
 		</ThemeProvider>
 	);
 }

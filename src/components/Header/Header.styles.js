@@ -13,7 +13,8 @@ export const HeaderContainer = styled.header`
 
     padding: 24px 64px;
 
-    background: transparent;
+    background: rgba(15, 14, 23, 0.85);
+    backdrop-filter: blur(12px);
     transition: ${(props) => props.theme.transitionDefault};
 `;
 
