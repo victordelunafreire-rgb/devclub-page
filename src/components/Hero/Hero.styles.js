@@ -42,3 +42,19 @@ export const Title = styled.h1`
 
     max-width: 900px;
 `;
+
+export const Signature = styled.p`
+    position: absolute;
+    bottom: 32px;
+    right: 48px;
+    z-index: 1;
+
+    font-family: ${(props) => props.theme.headingFont};
+    font-size: 18px;
+    font-weight: 700;
+    color: ${(props) => props.theme.textSecondary};
+
+    span {
+        color: ${(props) => props.theme.primary};
+    }
+`;
