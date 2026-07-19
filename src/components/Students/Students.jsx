@@ -22,7 +22,7 @@ export function Students() {
 							{student.status.includes('Contrat') ? 'Aprovado' : 'Em jornada'}
 						</Stamp>
 
-						<Photo />
+						<Photo $photo={student.photo} />
 						<Name>{student.name}</Name>
 						<DataRow>
 							Formação: <span>{student.formation}</span>

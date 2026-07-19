@@ -1,4 +1,7 @@
+import linustorvaldPhoto from '../../assets/mentors/linus-torvald.webp';
 import rodolfoPhoto from '../../assets/mentors/rodolfo-mori.png';
+import shakiraPhoto from '../../assets/mentors/shakira-backend.jpg';
+import stevejobsPhoto from '../../assets/mentors/steve-jobs.webp';
 
 export const mentors = [
 	{
@@ -14,32 +17,35 @@ export const mentors = [
 	},
 	{
 		id: 1,
-		name: 'Rodrigo Vale',
+		name: 'Linus Torvalds',
 		role: 'Mentor Full Stack',
+		photo: linustorvaldPhoto,
 		stats: [
-			{ label: 'Front-end', value: 90 },
-			{ label: 'Back-end', value: 85 },
-			{ label: 'Paciência', value: 75 },
+			{ label: 'Front-end', value: 45 },
+			{ label: 'Back-end', value: 100 },
+			{ label: 'Paciência', value: 15 },
 		],
 	},
 	{
 		id: 2,
-		name: 'Camila Duarte',
+		name: 'Shakira',
 		role: 'Mentora Back-end',
+		photo: shakiraPhoto,
 		stats: [
-			{ label: 'Back-end', value: 95 },
-			{ label: 'Banco de Dados', value: 90 },
-			{ label: 'Café tomado', value: 100 },
+			{ label: 'Back-end', value: 92 },
+			{ label: "Hips Don't Lie", value: 100 },
+			{ label: 'Ranking FIFA', value: 100 },
 		],
 	},
 	{
 		id: 3,
-		name: 'Théo Farias',
+		name: 'Steve Jobs',
 		role: 'Mentor Front-end',
+		photo: stevejobsPhoto,
 		stats: [
-			{ label: 'Front-end', value: 92 },
-			{ label: 'UI/UX', value: 80 },
-			{ label: 'Meme Game', value: 88 },
+			{ label: 'Front-end', value: 90 },
+			{ label: 'UI/UX', value: 100 },
+			{ label: 'Carisma no palco', value: 100 },
 		],
 	},
 ];

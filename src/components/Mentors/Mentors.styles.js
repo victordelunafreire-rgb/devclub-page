@@ -81,7 +81,7 @@ export const Portrait = styled.div`
 export const Name = styled.h3`
     font-family: ${(props) => props.theme.impactFont};
     font-size: 24px;
-    /* color: ${(props) => props.theme.textPrimary}; */
+    color: ${(props) => props.theme.textPrimary};
     letter-spacing: 1px
 `;
 

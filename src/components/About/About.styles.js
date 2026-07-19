@@ -6,10 +6,26 @@ export const AboutContainer = styled.section`
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 64px;
 
     padding: 0 64px;
 
     background: ${(props) => props.theme.backgroundElevated};
+`;
+
+export const ImagePlaceholder = styled.div`
+    flex-shrink: 0;
+    width: 400px;
+    height: 400px;
+
+    background: linear-gradient(
+        135deg,
+        ${(props) => props.theme.border},
+        ${(props) => props.theme.backgroundElevated}
+    );
+
+    border-radius: 16px;
 `;
 
 export const Content = styled.div`

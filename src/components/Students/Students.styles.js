@@ -64,11 +64,23 @@ export const Photo = styled.div`
     width: 96px;
     height: 128px;
 
-    background: linear-gradient(
-        135deg,
-        ${(props) => props.theme.backgroundElevated},
-        ${(props) => props.theme.border}
-    );
+    background-image: ${(props) =>
+			props.$photo
+				? `linear-gradient(
+    to bottom,
+    rgba(255, 107, 74, 0.25),
+    rgba(15, 14, 23, 0.85)
+    ), url(${props.$photo})`
+				: `linear-gradient(
+    135deg,
+    ${props.theme.backgroundElevated},
+    ${props.theme.border}
+    )`};
+
+    background-size: cover;
+    background-position: center top;
+
+    filter: grayscale(30%) contrast(1.1);
 
     margin-bottom: 16px;
 `;

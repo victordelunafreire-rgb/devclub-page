@@ -1,8 +1,14 @@
-import { AboutContainer, Content, Text, Title } from './About.styles';
+import {
+	AboutContainer,
+	Content,
+	ImagePlaceholder,
+	Text,
+	Title,
+} from './About.styles';
 
 export function About() {
 	return (
-		<AboutContainer>
+		<AboutContainer id="quemsomos">
 			<Content>
 				<Title>Quem Somos</Title>
 				<Text>
@@ -12,6 +18,8 @@ export function About() {
 					prestes a começar.
 				</Text>
 			</Content>
+
+			<ImagePlaceholder />
 		</AboutContainer>
 	);
 }
