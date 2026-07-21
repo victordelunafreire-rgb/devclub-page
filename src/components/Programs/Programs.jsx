@@ -1,45 +1,56 @@
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import { EffectCoverflow } from 'swiper/modules';
-import { SwiperSlide } from 'swiper/react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import { programs } from './Programs.data';
 import {
 	Card,
 	CardDescription,
 	CardTitle,
 	ProgramsContainer,
-	StyledSwiper,
 	Title,
+	Track,
 } from './Programs.styles';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function Programs() {
+	const containerRef = useRef(null);
+	const trackRef = useRef(null);
+
+	useGSAP(
+		() => {
+			const track = trackRef.current;
+			const scrollDistance = track.scrollWidth - window.innerWidth;
+
+			gsap.to(track, {
+				x: -scrollDistance,
+				ease: 'none',
+				scrollTrigger: {
+					trigger: containerRef.current,
+					start: 'top top',
+					end: () => `+=${scrollDistance * 3}`,
+					pin: true,
+					scrub: 1,
+					invalidateOnRefresh: true,
+				},
+			});
+		},
+		{ scope: containerRef },
+	);
+
 	return (
-		<ProgramsContainer id="formacoes">
+		<ProgramsContainer id="formacoes" ref={containerRef}>
 			<Title>Formações</Title>
 
-			<StyledSwiper
-				modules={[EffectCoverflow]}
-				effect="coverflow"
-				grabCursor
-				centeredSlides
-				slidesPerView="auto"
-				coverflowEffect={{
-					rotate: 30,
-					stretch: 0,
-					depth: 100,
-					modifier: 1,
-					slideShadows: false,
-				}}
-			>
+			<Track ref={trackRef}>
 				{programs.map((program) => (
-					<SwiperSlide key={program.id} style={{ width: '320px' }}>
-						<Card>
-							<CardTitle>{program.title}</CardTitle>
-							<CardDescription>{program.description}</CardDescription>
-						</Card>
-					</SwiperSlide>
+					<Card key={program.id}>
+						<CardTitle>{program.title}</CardTitle>
+						<CardDescription>{program.description}</CardDescription>
+					</Card>
 				))}
-			</StyledSwiper>
+			</Track>
 		</ProgramsContainer>
 	);
 }
