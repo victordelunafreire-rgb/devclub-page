@@ -16,16 +16,28 @@ export const AboutContainer = styled.section`
 
 export const ImagePlaceholder = styled.div`
     flex-shrink: 0;
-    width: 400px;
-    height: 400px;
+    width: 480px;
+    aspect-ratio: 16 / 9;
 
-    background: linear-gradient(
-        135deg,
-        ${(props) => props.theme.border},
-        ${(props) => props.theme.backgroundElevated}
-    );
+    background-image: ${(props) =>
+			props.$photo
+				? `linear-gradient(
+    to bottom,
+    rgba(255, 107, 74, 0.25),
+    rgba(15, 14, 23, 0.85)
+    ), url(${props.$photo})`
+				: `linear-gradient(
+    135deg,
+    ${props.theme.border},
+    ${props.theme.backgroundElevated}
+    )`};
 
-    border-radius: 16px;
+        background-size: cover;
+        background-position: 90% top;
+
+        filter: grayscale(30%) contrast(1.1);
+
+        border-radius: 16px;
 `;
 
 export const Content = styled.div`

@@ -1,3 +1,4 @@
+import rodolfoPhoto from '../../assets/about/rodolfo-about.webp';
 import {
 	AboutContainer,
 	Content,
@@ -19,7 +20,7 @@ export function About() {
 				</Text>
 			</Content>
 
-			<ImagePlaceholder />
+			<ImagePlaceholder $photo={rodolfoPhoto} />
 		</AboutContainer>
 	);
 }
