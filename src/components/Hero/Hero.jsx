@@ -1,13 +1,27 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useRef } from 'react';
-import { GlowBackground, HeroContainer, Signature, Title } from './Hero.styles';
+import { useEffect, useRef } from 'react';
+import heroVideo from '../../assets/Hero/hero-background.mp4';
+import {
+	GlowBackground,
+	HeroContainer,
+	Signature,
+	Title,
+	VideoBackground,
+} from './Hero.styles';
 
 export function Hero() {
 	const containerRef = useRef(null);
 	const glowRef = useRef(null);
 	const titleRef = useRef(null);
 	const signatureRef = useRef(null);
+	const videoRef = useRef(null);
+
+	useEffect(() => {
+		if (videoRef.current) {
+			videoRef.current.playbackRate = 0.5;
+		}
+	}, []);
 
 	useGSAP(
 		() => {
@@ -41,6 +55,14 @@ export function Hero() {
 
 	return (
 		<HeroContainer id="hero" ref={containerRef}>
+			<VideoBackground
+				ref={videoRef}
+				autoPlay
+				loop
+				muted
+				playsInline
+				src={heroVideo}
+			/>
 			<GlowBackground ref={glowRef} />
 
 			<Title ref={titleRef}>
