@@ -12,6 +12,12 @@ export const ProgramsContainer = styled.section`
     position: relative;
 
     background: ${(props) => props.theme.background};
+
+    @media (max-width: 768px) {
+        height: auto;
+        min-height: auto;
+        padding: 80px 0;
+    };
 `;
 
 export const Title = styled.h2`
@@ -32,9 +38,19 @@ export const Track = styled.div`
     padding-right: 64px;
 
     width: fit-content;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-left: 24px;
+        padding-right: 24px;
+        -webkit-overflow-scrolling: touch;
+    }
 `;
 
 export const Card = styled.div`
+    position: relative;
     flex-shrink: 0;
     width: 380px;
     padding: 40px;
@@ -53,6 +69,25 @@ export const Card = styled.div`
         z-index: 1;
         position: relative;
     }
+
+    @media (max-width: 768px) {
+        scroll-snap-align: center;
+    }
+`;
+
+export const IconWrapper = styled.div`
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    filter: drop-shadow(0 0 8px ${(props) => props.theme.primaryGlow})
 `;
 
 export const CardTitle = styled.h3`

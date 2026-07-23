@@ -21,6 +21,13 @@ export const AboutContainer = styled.section`
     padding: 0 64px;
 
     background: ${(props) => props.theme.backgroundElevated};
+
+    @media (max-width: 796px) {
+        flex-direction: column;
+        padding: 80px 24px;
+        text-align: center;
+        gap: 40px;
+    }
 `;
 
 export const ImagePlaceholder = styled.div`
@@ -36,6 +43,12 @@ export const ImagePlaceholder = styled.div`
 
     &:hover {
         animation: none;
+    }
+
+    @media (max-width: 796px) {
+        width: 100%;
+        max-width: 340px;
+        height: 320px;
     }
 `;
 

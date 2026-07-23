@@ -33,6 +33,10 @@ export const Nav = styled.nav`
     display: flex;
     align-items: center;
     gap: 40px;
+
+    @media (max-width: 796px) {
+        display: none;
+    }
 `;
 
 export const NavLink = styled.a`
@@ -56,5 +60,49 @@ export const CTAButton = styled.button`
 
     &:hover {
         opacity: 0.9;
+    }
+
+    @media (max-width: 796px) {
+        display: none;
+    }
+`;
+
+export const MenuButton = styled.button`
+    display: none;
+
+    @media (max-width: 796px) {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        z-index: 101;
+
+        span {
+            width: 24px;
+            height: 2px;
+            background: ${(props) => props.theme.textPrimary};
+            transition: ${(props) => props.theme.transitionDefault};
+        }
+    }
+`;
+
+export const MobileMenu = styled.div`
+    display: none;
+
+    @media (max-width: 796px) {
+        display: ${(props) => (props.$open ? 'flex' : 'none')};
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+
+        padding-top: 120px;
+
+        background: ${(props) => props.theme.background};
+        z-index: 100;
     }
 `;

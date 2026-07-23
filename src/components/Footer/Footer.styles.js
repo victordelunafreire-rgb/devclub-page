@@ -7,6 +7,10 @@ export const FooterContainer = styled.footer`
 
     background: ${(props) => props.theme.backgroundElevated};
     border-top: 1px solid ${(props) => props.theme.border};
+
+    @media (max-width: 796px) {
+        padding: 48px 24px;
+    }
 `;
 
 export const Content = styled.div`
@@ -19,6 +23,12 @@ export const Content = styled.div`
     margin: 0 auto;
 
     padding-bottom: 48px;
+
+    @media (max-width: 796px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
 `;
 
 export const Logo = styled.p`
@@ -29,6 +39,10 @@ export const Logo = styled.p`
 
     span {
         color: ${(props) => props.theme.primary};
+    }
+
+    @media (max-width: 796px) {
+        grid-column: 1 / -1;
     }
 `;
 

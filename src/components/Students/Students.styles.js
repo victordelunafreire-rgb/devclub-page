@@ -26,6 +26,11 @@ export const Grid = styled.div`
 
     max-width: 1200px;
     margin: 0 auto;
+
+    @media (max-width: 796px) {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
 `;
 
 export const Card = styled.div`

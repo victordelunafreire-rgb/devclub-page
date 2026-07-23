@@ -2,12 +2,14 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef } from 'react';
+import { standardTheme } from '../../styles/standard.js';
 import { AmbientParticles } from '../AmbientParticles/AmbientParticles';
 import { programs } from './Programs.data';
 import {
 	Card,
 	CardDescription,
 	CardTitle,
+	IconWrapper,
 	ProgramsContainer,
 	Title,
 	Track,
@@ -22,18 +24,23 @@ export function Programs() {
 	useGSAP(
 		() => {
 			const track = trackRef.current;
-			const scrollDistance = track.scrollWidth - window.innerWidth;
 
-			gsap.to(track, {
-				x: -scrollDistance,
-				ease: 'none',
-				scrollTrigger: {
-					trigger: containerRef.current,
-					start: 'top top',
-					end: () => `+=${scrollDistance * 3}`,
-					pin: true,
-					scrub: 1,
-					invalidateOnRefresh: true,
+			ScrollTrigger.matchMedia({
+				'(min-width: 796px)': () => {
+					const scrollDistance = track.scrollWidth - window.innerWidth;
+
+					gsap.to(track, {
+						x: -scrollDistance,
+						ease: 'none',
+						scrollTrigger: {
+							trigger: containerRef.current,
+							start: 'top top',
+							end: () => `+=${scrollDistance * 3}`,
+							pin: true,
+							scrub: 1,
+							invalidateOnRefresh: true,
+						},
+					});
 				},
 			});
 		},
@@ -49,6 +56,10 @@ export function Programs() {
 			<Track ref={trackRef}>
 				{programs.map((program) => (
 					<Card key={program.id}>
+						<IconWrapper>
+							<program.icon size={32} color={standardTheme.primary} />
+						</IconWrapper>
+
 						<CardTitle>{program.title}</CardTitle>
 						<CardDescription>{program.description}</CardDescription>
 					</Card>
