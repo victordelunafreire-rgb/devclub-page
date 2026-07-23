@@ -20,7 +20,7 @@ export function Header() {
 				<NavLink href="#tutores">Tutores</NavLink>
 			</Nav>
 
-			<CTAButton>Comece agora</CTAButton>
+			<CTAButton>Quero ser aluno</CTAButton>
 		</HeaderContainer>
 	);
 }

@@ -35,6 +35,14 @@ export const Card = styled.div`
     background: ${(props) => props.theme.backgroundElevated};
 
     padding: 20px;
+
+    transition: ${(props) => props.theme.transitionDefault};
+
+    &:hover {
+        transform: scale(1.05) translateY(-6px);
+        box-shadow: 0 20px 40px rgba(255, 107, 74, 0.25);
+        z-index: 1;
+    }
 `;
 
 export const PlayerTag = styled.span`

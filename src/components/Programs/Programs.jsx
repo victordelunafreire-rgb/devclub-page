@@ -2,6 +2,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef } from 'react';
+import { AmbientParticles } from '../AmbientParticles/AmbientParticles';
 import { programs } from './Programs.data';
 import {
 	Card,
@@ -41,6 +42,8 @@ export function Programs() {
 
 	return (
 		<ProgramsContainer id="formacoes" ref={containerRef}>
+			<AmbientParticles />
+
 			<Title>Formações</Title>
 
 			<Track ref={trackRef}>

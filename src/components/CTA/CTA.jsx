@@ -7,7 +7,7 @@ export function CTA() {
 
 			<Title>Sua vaga como programador começa com um clique</Title>
 
-			<Button>Quero começar agora</Button>
+			<Button>Quero ser aluno</Button>
 		</CTAContainer>
 	);
 }

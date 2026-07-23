@@ -17,7 +17,19 @@ export const AboutContainer = styled.section`
 export const ImagePlaceholder = styled.div`
     flex-shrink: 0;
     width: 480px;
-    aspect-ratio: 16 / 9;
+    height: 400px;
+    position: relative;
+
+    border-radius: 16px;
+    overflow: hidden;
+`;
+
+export const ImageLayer = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
     background-image: ${(props) =>
 			props.$photo
@@ -26,18 +38,19 @@ export const ImagePlaceholder = styled.div`
     rgba(255, 107, 74, 0.25),
     rgba(15, 14, 23, 0.85)
     ), url(${props.$photo})`
-				: `linear-gradient(
-    135deg,
-    ${props.theme.border},
-    ${props.theme.backgroundElevated}
-    )`};
+				: 'none'};
 
-        background-size: cover;
-        background-position: 90% top;
+    background-size: cover;
+    background-position: ${(props) => props.$position || 'center top'};
 
-        filter: grayscale(30%) contrast(1.1);
+    filter: grayscale(30%) contrast(1.1);
 
-        border-radius: 16px;
+    opacity: ${(props) => (props.$hovered ? 0 : 1)};
+    transition: opacity 0.8s ease;
+`;
+
+export const ImageLayerHover = styled(ImageLayer)`
+    opacity: ${(props) => (props.$hovered ? 1 : 0)};
 `;
 
 export const Content = styled.div`
