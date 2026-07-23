@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+export const pulse = keyframes`
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 107, 74, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 12px rgba(255, 107, 74, 0);
+    }
+`;
 
 export const AboutContainer = styled.section`
     min-height: 80vh;
@@ -22,6 +31,12 @@ export const ImagePlaceholder = styled.div`
 
     border-radius: 16px;
     overflow: hidden;
+
+    animation: ${pulse} 2.5s ease-in-out infinite;
+
+    &:hover {
+        animation: none;
+    }
 `;
 
 export const ImageLayer = styled.div`
