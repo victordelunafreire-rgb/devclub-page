@@ -6,6 +6,7 @@ export const PartnerContainer = styled.section`
 
     position: relative;
 
+    background: ${(props) => props.theme.background};
     overflow: hidden;
 `;
 

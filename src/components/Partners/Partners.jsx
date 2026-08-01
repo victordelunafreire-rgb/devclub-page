@@ -1,4 +1,3 @@
-import { SectionBackdropFill } from '../SectionBackdrop/SectionBackdrop.styles';
 import { partners } from './Partners.data';
 import {
 	LogoWrapper,
@@ -11,7 +10,6 @@ import {
 export function Partners() {
 	return (
 		<PartnerContainer id="empresas">
-			<SectionBackdropFill />
 			<Title>+300 empresas parceiras</Title>
 
 			<Track>

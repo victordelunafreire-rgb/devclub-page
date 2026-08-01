@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useHeroCompleteFade } from '../../hooks/useHeroCompleteFade';
 import {
 	CTAButton,
 	HeaderContainer,
@@ -11,9 +12,12 @@ import {
 
 export function Header() {
 	const [menuOpen, setMenuOpen] = useState(false);
+	const containerRef = useRef(null);
+
+	useHeroCompleteFade(containerRef);
 
 	return (
-		<HeaderContainer>
+		<HeaderContainer ref={containerRef}>
 			<Logo>
 				Dev<span>Club{'/>'}</span>
 			</Logo>

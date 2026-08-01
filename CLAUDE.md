@@ -31,13 +31,19 @@ Página institucional para concurso de vaga (Programador Full Stack, DevClub). O
 
 ---
 
-## 3. Conceito central do V2: "A Trilha"
+## 3. Conceito central do V2: Indicador de Progresso de Scroll
 
-Uma linha (SVG `path` com `stroke-dashoffset` animado via GSAP ScrollTrigger) atravessa a página inteira, do Hero ao CTA, passando por trás/ao lado de todas as seções — não é elemento de uma seção específica, é uma camada própria de posicionamento global, coordenada ao progresso de scroll da página inteira (não por seção individual). Metáfora: tabuleiro de jogo / jornada do herói. Pode ganhar marcos (pontos/bolinhas) nas transições entre seções — a definir em detalhamento técnico futuro.
+Uma cápsula vertical fixa (`position: fixed`, lateral direita `right: 32px`, centralizada verticalmente via `top: 50%; transform: translateY(-50%)`), 220px de altura por 6px de largura, `border-radius` total (formato pílula). É só o trilho de fundo — cor `primary` a ~25% de opacidade, translúcido e discreto.
 
-**Ordem real das seções no DOM** (confirmada em `App.jsx`, usada para calcular os waypoints): Hero → About → Programs → Students → Partners → Mentors → CTA. Essa ordem **diverge** da numeração da seção 4 abaixo (que segue a ordem em que as seções foram especificadas, não a ordem real de renderização) — usar sempre a ordem do `App.jsx` como fonte de verdade para qualquer trabalho que dependa da posição real das seções na página (trilha, header condicional, etc.).
+Dentro da cápsula, um **thumb** (círculo de ~16px, `primary` sólido, glow leve via `box-shadow` com blur suave na mesma cor) se desloca de cima pra baixo dentro dos limites da cápsula (nunca sai dela): 0% de scroll = topo do thumb no topo da cápsula; 100% = no fundo. Progresso calculado sobre o scroll total da página inteira (0–100%), via um único listener global (`ScrollTrigger` com `trigger: document.body`, `start: 'top top'`, `end: 'bottom bottom'`) — sem lógica por seção, sem marcos, sem posicionamento individual, sem texto ou labels.
 
-**Header:** invisível até a trilha começar a ser percorrida (ou seja, até o usuário iniciar o scroll para além do Hero). Comportamento a implementar via ScrollTrigger com toggle de visibilidade/opacidade.
+A scrollbar nativa do navegador é escondida via CSS (`scrollbar-width: none` no Firefox, `::-webkit-scrollbar { display: none }` no Chrome/Safari) — essa cápsula é o único indicador de progresso que deve aparecer.
+
+**Visibilidade condicionada ao fim do Hero:** tanto a cápsula quanto o Header (seção 4.8) ficam invisíveis (`autoAlpha: 0`) até a timeline do Hero terminar por completo, e reaparecem (fade, reversível ao rolar de volta) exatamente nesse ponto — nunca antes. Fonte de verdade única: o Hero expõe o scroll onde seu próprio pin termina via `data-hero-complete-scroll-y` no `#hero`; ambos os consumidores leem esse mesmo valor através do hook compartilhado `useHeroCompleteFade` (`src/hooks/`), nunca um valor estimado separadamente.
+
+Este conceito **substitui** a ideia original de "trilha sinuosa" (SVG `path` atravessando o DOM com marcos nas transições entre seções), abandonada por complexidade desproporcional ao ganho visual: o `pin` do GSAP (usado no Hero e no Programs) aplica `transform` ao elemento pinado, criando um novo stacking context que isola qualquer coisa dentro dele de comparações de `z-index` com elementos externos — o que exigiu múltiplas camadas de contorno (backdrops externos medidos via JS, ajuste fino de `z-index` negativo) sem benefício claro sobre a identidade visual que cada seção já tem por conta própria.
+
+**Ordem real das seções no DOM** (confirmada em `App.jsx`): Hero → About → Programs → Students → Partners → Mentors → CTA. Essa ordem **diverge** da numeração da seção 4 abaixo (que segue a ordem em que as seções foram especificadas, não a ordem real de renderização) — usar sempre a ordem do `App.jsx` como fonte de verdade para qualquer trabalho que dependa da posição real das seções na página.
 
 ---
 
@@ -48,13 +54,14 @@ Uma linha (SVG `path` com `stroke-dashoffset` animado via GSAP ScrollTrigger) at
 Sequência (nessa ordem):
 
 1. **Vídeo de abertura** (técnica "frame-scroll", ver seção 5): sala escura, único ponto de luz branca indireta iluminando uma mesa de escritório escuro com MacBook preto fechado. A tampa se abre; na tela, VS Code com um projeto React sendo finalizado. Câmera é "sugada" para dentro da tela. Fade to white.
-2. **Transição pós-white**: o branco se reduz a um **pin de marcação** (silhueta de gota/pin, contorno fino sem preenchimento sólido, cor `primary`) — mesmo efeito de glow duplo (núcleo nítido + halo blur) usado na trilha e nos marcos, mantendo consistência visual entre os três elementos. Fundo volta ao dark padrão do site. O pin marca visualmente o início da trilha e reforça a metáfora de jornada (seção 3) — substituiu o conceito anterior de cubo/tesseract.
+2. **Transição pós-white**: o branco se dissolve e o fundo volta ao dark padrão do site.
 3. **Tipografia animada** (GSAP puro, sem vídeo):
    - "O primeiro passo" — entra da esquerda para a direita
    - "da sua nova jornada" — entra da direita para a esquerda
    - "começa aqui" — entra de baixo para cima
 4. **Assinatura** "DevClub/>" no canto inferior direito — reaproveitar componente `Signature` já existente (mesmo padrão do V1).
-5. A trilha nasce a partir da ponta inferior do pin (mesma coordenada de origem do path, nunca calculada separadamente) e segue para o restante da página. A trilha só fica visível (opacity 0→1) a partir do ponto de scroll em que a animação do pin termina — mesma fonte de verdade usada para os dois, não um valor estimado.
+
+Não há mais nenhum elemento de marcação (cubo/tesseract ou pin) nesta sequência — abandonado junto com o conceito de trilha física (ver seção 3).
 
 ### 4.2 Programs (Formações)
 
@@ -65,7 +72,10 @@ Dois ajustes independentes sobre a base V1 existente:
 
 ### 4.3 About (Quem Somos)
 
-**Sem alterações.** Mantém texto e crossfade de foto (Rodolfo estúdio ↔ eletricista) como está no V1.
+Texto mantido como está no V1. O crossfade de foto (Rodolfo eletricista ↔ programador) deixa de ser por hover e passa a ser controlado por scroll:
+
+- **Transição**: `ScrollTrigger` com `scrub` (sem `pin`) — `trigger: AboutContainer`, `start: 'top bottom'`; `end` calculado dinamicamente como `+= 25% da altura da própria seção` (`() => `+=${containerRef.current.offsetHeight * 0.25}``). Janela deliberadamente estreita: o crossfade resolve para `opacity: 1` (programador) dentro dos primeiros ~25% do scroll pela seção — em vez de se estender por 100% do range (mapeamento anterior via `endTrigger` na foto), o que fazia a mistura das duas fotos ("assombração") acontecer bem no meio do scroll, exatamente onde o usuário passa mais tempo lendo o texto já assentado na tela. Com a janela estreita, a foto chega praticamente resolvida (ou já resolvida) no momento em que entra na área visível, permanecendo nítida e estática pelo resto do scroll da seção. Ao entrar na seção, a foto do Rodolfo eletricista aparece primeiro (camada de base, sempre visível); a segunda camada (foto programador) cresce de `opacity: 0` a `1` proporcionalmente a esse progresso estreito — sem travar a página.
+- **Borda**: estática, `primary` (`#FF6B4A`) com glow leve constante (`box-shadow`) — substituiu o efeito de piscar (`pulse`/`box-shadow` animado) do V1. Não depende de estado de scroll ou hover.
 
 ### 4.4 Students (Alunos)
 
@@ -87,11 +97,11 @@ Mecânica de exibição a especificar (era marquee infinito no V1 — avaliar se
 
 ### 4.7 CTA
 
-Ponto onde a trilha termina visualmente. Botão existente (`Quero ser aluno`) aparece na tela. Sem outras alterações estruturais além da chegada da trilha.
+**Sem alterações estruturais nesta revisão.** Botão existente (`Quero ser aluno`) permanece como está.
 
 ### 4.8 Header
 
-Mantém estrutura V1 (logo, nav, CTA, menu mobile). Nova regra: invisível/oculto até a transição completa do Hero terminar (frame-scroll + pin + tipografia + assinatura) — não apenas quando a trilha "nasce" do pin. Implementar visibilidade condicionada ao progresso de scroll via `ScrollTrigger`, usando o fim da timeline do Hero como gatilho.
+Mantém estrutura V1 (logo, nav, CTA, menu mobile). Nova regra: invisível/oculto até a transição completa do Hero terminar (frame-scroll + tipografia + assinatura) — implementado via o hook compartilhado `useHeroCompleteFade` (ver seção 3), mesma fonte de verdade usada pela cápsula de progresso.
 
 ### 4.9 Footer
 
@@ -115,13 +125,14 @@ Técnica de referência ("Scroll World"): (1) gerar imagem-âncora via IA, (2) a
 ## 6. Ordem de execução recomendada
 
 1. Hero (vídeo + transição + tipografia) — validar pipeline técnico primeiro
-2. Trilha (elemento global de página inteira)
+2. Indicador de progresso de scroll (elemento global fixo)
 3. Header (comportamento condicional)
 4. Programs (ajustes: cards + partículas reduzidas)
 5. Students (espiral de fotos)
 6. Mentors (polaroids aleatórias → grid)
 7. Partners (nova lista de logos + mecânica de exibição)
-8. CTA (chegada da trilha)
+
+CTA não requer trabalho adicional nesta revisão (ver 4.7).
 
 About e Footer não requerem trabalho nesta revisão.
 
@@ -132,5 +143,4 @@ About e Footer não requerem trabalho nesta revisão.
 - Quantidade final de fotos de alunos para o efeito de espiral
 - Quantidade e identidade dos novos mentores a adicionar
 - Mecânica final de exibição do Partners (marquee vs. célula cíclica)
-- Design exato dos marcos/bolinhas da trilha nas transições entre seções
 - Efeitos adicionais leves ao longo da página (mencionados como possibilidade, natureza ainda não definida — nada no nível de complexidade do Hero)

@@ -60,44 +60,6 @@ export const WhiteFlash = styled.div`
     pointer-events: none;
 `;
 
-export const PinWrapper = styled.div`
-    position: absolute;
-    top: 12%;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 90px;
-    height: 117px;
-
-    z-index: 1;
-`;
-
-export const PinSvg = styled.svg`
-    width: 100%;
-    height: 100%;
-
-    overflow: visible;
-`;
-
-export const PinHalo = styled.path`
-    fill: none;
-    stroke: ${(props) => props.theme.primary};
-    stroke-width: 10px;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    opacity: 0.4;
-    filter: blur(8px);
-`;
-
-export const PinCore = styled.path`
-    fill: none;
-    stroke: ${(props) => props.theme.primary};
-    stroke-width: 2.5px;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    filter: drop-shadow(0 0 6px ${(props) => props.theme.primaryGlow});
-`;
-
 export const Signature = styled.p`
     position: absolute;
     bottom: 32px;

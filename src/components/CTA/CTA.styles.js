@@ -13,6 +13,8 @@ export const CTAContainer = styled.section`
     overflow: hidden;
 
     padding: 64px;
+
+    background: ${(props) => props.theme.background};
 `;
 
 export const GlowBackground = styled.div`

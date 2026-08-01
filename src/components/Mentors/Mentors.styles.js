@@ -7,6 +7,8 @@ export const MentorsContainer = styled.section`
     position: relative;
 
     padding: 128px 64px;
+
+    background: ${(props) => props.theme.background};
 `;
 
 export const Title = styled.h2`

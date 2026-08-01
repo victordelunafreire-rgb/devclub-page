@@ -7,10 +7,6 @@ import {
 	FrameCanvas,
 	GlowBackground,
 	HeroContainer,
-	PinCore,
-	PinHalo,
-	PinSvg,
-	PinWrapper,
 	Signature,
 	Title,
 	TitleLine,
@@ -19,18 +15,12 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PIN_PATH_D =
-	'M45,0 C20.1,0 0,20.1 0,45 C0,69.8 45,117 45,117 C45,117 90,69.8 90,45 C90,20.1 69.8,0 45,0 Z';
-
 export function Hero() {
 	const containerRef = useRef(null);
 	const canvasRef = useRef(null);
 	const imagesRef = useRef([]);
 	const glowRef = useRef(null);
 	const whiteFlashRef = useRef(null);
-	const pinHaloRef = useRef(null);
-	const pinCoreRef = useRef(null);
-	const pinAnchorRef = useRef(null);
 	const line1Ref = useRef(null);
 	const line2Ref = useRef(null);
 	const line3Ref = useRef(null);
@@ -62,14 +52,10 @@ export function Hero() {
 
 	useGSAP(
 		() => {
-			const pinLength = pinCoreRef.current.getTotalLength();
-			gsap.set([pinHaloRef.current, pinCoreRef.current], {
-				strokeDasharray: pinLength,
-				strokeDashoffset: pinLength,
-			});
-
 			const frameState = { frame: 0 };
 			const pinScrollDistance = window.innerHeight * 5.5;
+			containerRef.current.dataset.heroCompleteScrollY =
+				String(pinScrollDistance);
 
 			const tl = gsap.timeline({
 				scrollTrigger: {
@@ -114,26 +100,12 @@ export function Hero() {
 					},
 					'-=0.3',
 				)
-				.to(
-					[pinHaloRef.current, pinCoreRef.current],
-					{
-						strokeDashoffset: 0,
-						duration: 1,
-						ease: 'power2.inOut',
-					},
-					'-=0.6',
-				)
-				.addLabel('pinRevealComplete')
-				.from(
-					line1Ref.current,
-					{
-						x: -80,
-						opacity: 0,
-						duration: 2.5,
-						ease: 'power2.out',
-					},
-					'-=0.2',
-				)
+				.from(line1Ref.current, {
+					x: -80,
+					opacity: 0,
+					duration: 2.5,
+					ease: 'power2.out',
+				})
 				.from(line2Ref.current, {
 					x: 80,
 					opacity: 0,
@@ -152,10 +124,6 @@ export function Hero() {
 					duration: 1,
 					ease: 'power2.out',
 				});
-
-			const revealFraction = tl.labels.pinRevealComplete / tl.duration();
-			const revealScrollY = revealFraction * pinScrollDistance;
-			pinAnchorRef.current.dataset.trailRevealScrollY = String(revealScrollY);
 		},
 		{ scope: containerRef },
 	);
@@ -165,13 +133,6 @@ export function Hero() {
 			<FrameCanvas ref={canvasRef} width={960} height={540} />
 			<GlowBackground ref={glowRef} />
 			<WhiteFlash ref={whiteFlashRef} />
-
-			<PinWrapper id="hero-trail-start" ref={pinAnchorRef}>
-				<PinSvg viewBox="0 0 90 117">
-					<PinHalo ref={pinHaloRef} d={PIN_PATH_D} />
-					<PinCore ref={pinCoreRef} d={PIN_PATH_D} />
-				</PinSvg>
-			</PinWrapper>
 
 			<Title>
 				<TitleLine ref={line1Ref}>O primeiro passo</TitleLine>

@@ -1,4 +1,3 @@
-import { SectionBackdropFill } from '../SectionBackdrop/SectionBackdrop.styles';
 import { students } from './Students.data';
 import {
 	Card,
@@ -14,7 +13,6 @@ import {
 export function Students() {
 	return (
 		<StudentsContainer id="alunos">
-			<SectionBackdropFill $elevated />
 			<Title>Alunos</Title>
 
 			<Grid>

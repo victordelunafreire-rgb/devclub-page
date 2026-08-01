@@ -1,13 +1,4 @@
-import styled, { keyframes } from 'styled-components';
-
-export const pulse = keyframes`
-    0%, 100% {
-        box-shadow: 0 0 0 0 rgba(255, 107, 74, 0.4);
-    }
-    50% {
-        box-shadow: 0 0 0 12px rgba(255, 107, 74, 0);
-    }
-`;
+import styled from 'styled-components';
 
 export const AboutContainer = styled.section`
     min-height: 80vh;
@@ -21,6 +12,8 @@ export const AboutContainer = styled.section`
     gap: 64px;
 
     padding: 0 64px;
+
+    background: ${(props) => props.theme.backgroundElevated};
 
     @media (max-width: 796px) {
         flex-direction: column;
@@ -39,11 +32,8 @@ export const ImagePlaceholder = styled.div`
     border-radius: 16px;
     overflow: hidden;
 
-    animation: ${pulse} 2.5s ease-in-out infinite;
-
-    &:hover {
-        animation: none;
-    }
+    border: 2px solid ${(props) => props.theme.primary};
+    box-shadow: 0 0 24px ${(props) => props.theme.primaryGlow};
 
     @media (max-width: 796px) {
         width: 100%;
@@ -52,7 +42,7 @@ export const ImagePlaceholder = styled.div`
     }
 `;
 
-export const ImageLayer = styled.div`
+export const ImageLayerBase = styled.div`
     position: absolute;
     top: 0;
     left: 0;
@@ -72,13 +62,10 @@ export const ImageLayer = styled.div`
     background-position: ${(props) => props.$position || 'center top'};
 
     filter: grayscale(30%) contrast(1.1);
-
-    opacity: ${(props) => (props.$hovered ? 0 : 1)};
-    transition: opacity 0.8s ease;
 `;
 
-export const ImageLayerHover = styled(ImageLayer)`
-    opacity: ${(props) => (props.$hovered ? 1 : 0)};
+export const ImageLayerFade = styled(ImageLayerBase)`
+    opacity: 0;
 `;
 
 export const Content = styled.div`

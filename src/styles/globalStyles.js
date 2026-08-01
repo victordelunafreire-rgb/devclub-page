@@ -7,6 +7,14 @@ export const GlobalStyles = createGlobalStyle`
         box-sizing: border-box;
     }
 
+    html {
+        scrollbar-width: none;
+    }
+
+    html::-webkit-scrollbar {
+        display: none;
+    }
+
     body {
         background: ${(props) => props.theme.background};
         color: ${(props) => props.theme.textPrimary};

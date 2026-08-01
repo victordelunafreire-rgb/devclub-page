@@ -1,23 +1,45 @@
-import { useState } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
 import rodolfoPhoto from '../../assets/about/rodolfo-about.webp';
 import rodolfoEletricista from '../../assets/about/rodolfo-eletricista.webp';
-import { SectionBackdropFill } from '../SectionBackdrop/SectionBackdrop.styles';
 import {
 	AboutContainer,
 	Content,
-	ImageLayer,
-	ImageLayerHover,
+	ImageLayerBase,
+	ImageLayerFade,
 	ImagePlaceholder,
 	Text,
 	Title,
 } from './About.styles';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function About() {
-	const [isHovered, setIsHovered] = useState(false);
+	const containerRef = useRef(null);
+	const imageRef = useRef(null);
+	const fadeLayerRef = useRef(null);
+
+	useGSAP(
+		() => {
+			gsap.set(fadeLayerRef.current, { opacity: 0 });
+
+			ScrollTrigger.create({
+				trigger: imageRef.current,
+				start: 'top bottom',
+				end: () => `+=${imageRef.current.offsetHeight * 1.5}`,
+				scrub: 1,
+				onUpdate: (self) => {
+					gsap.set(fadeLayerRef.current, { opacity: self.progress });
+				},
+			});
+		},
+		{ scope: containerRef },
+	);
 
 	return (
-		<AboutContainer id="quemsomos">
-			<SectionBackdropFill $elevated />
+		<AboutContainer id="quemsomos" ref={containerRef}>
 			<Content>
 				<Title>Quem Somos</Title>
 				<Text>
@@ -28,19 +50,12 @@ export function About() {
 				</Text>
 			</Content>
 
-			<ImagePlaceholder
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
-			>
-				<ImageLayer
+			<ImagePlaceholder ref={imageRef}>
+				<ImageLayerBase $photo={rodolfoEletricista} $position="center 50%" />
+				<ImageLayerFade
+					ref={fadeLayerRef}
 					$photo={rodolfoPhoto}
-					$hovered={isHovered}
 					$position="90% top"
-				/>
-				<ImageLayerHover
-					$photo={rodolfoEletricista}
-					$hovered={isHovered}
-					$position="center 50%"
 				/>
 			</ImagePlaceholder>
 		</AboutContainer>

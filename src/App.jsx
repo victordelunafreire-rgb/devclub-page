@@ -7,8 +7,8 @@ import { Hero } from './components/Hero/Hero';
 import { Mentors } from './components/Mentors/Mentors';
 import { Partners } from './components/Partners/Partners';
 import { Programs } from './components/Programs/Programs';
+import { ScrollProgress } from './components/ScrollProgress/ScrollProgress';
 import { Students } from './components/Students/Students';
-import { Trail } from './components/Trail/Trail';
 import { GlobalStyles } from './styles/globalStyles';
 import { standardTheme } from './styles/standard';
 
@@ -25,7 +25,7 @@ function App() {
 			<Mentors />
 			<CTA />
 			<Footer />
-			<Trail />
+			<ScrollProgress />
 		</ThemeProvider>
 	);
 }
