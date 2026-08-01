@@ -13,14 +13,14 @@ export const AboutContainer = styled.section`
     min-height: 80vh;
     width: 100%;
 
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 64px;
 
     padding: 0 64px;
-
-    background: ${(props) => props.theme.backgroundElevated};
 
     @media (max-width: 796px) {
         flex-direction: column;

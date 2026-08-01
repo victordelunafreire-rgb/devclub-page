@@ -4,9 +4,9 @@ export const MentorsContainer = styled.section`
     min-height: 100vh;
     width: 100%;
 
-    padding: 128px 64px;
+    position: relative;
 
-    background: ${(props) => props.theme.background};
+    padding: 128px 64px;
 `;
 
 export const Title = styled.h2`

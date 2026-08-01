@@ -11,8 +11,6 @@ export const ProgramsContainer = styled.section`
     overflow: hidden;
     position: relative;
 
-    background: ${(props) => props.theme.background};
-
     @media (max-width: 768px) {
         height: auto;
         min-height: auto;

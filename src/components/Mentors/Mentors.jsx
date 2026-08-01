@@ -1,3 +1,4 @@
+import { SectionBackdropFill } from '../SectionBackdrop/SectionBackdrop.styles';
 import { mentors } from './Mentors.data';
 import {
 	Card,
@@ -17,6 +18,7 @@ import {
 export function Mentors() {
 	return (
 		<MentorsContainer id="tutores">
+			<SectionBackdropFill />
 			<Title>Tutores</Title>
 
 			<Grid>

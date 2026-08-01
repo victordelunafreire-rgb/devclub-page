@@ -36,8 +36,8 @@ export function Programs() {
 							trigger: containerRef.current,
 							start: 'top top',
 							end: () => `+=${scrollDistance * 3}`,
-							pin: true,
 							scrub: 1,
+							pin: true,
 							invalidateOnRefresh: true,
 						},
 					});

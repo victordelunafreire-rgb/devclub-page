@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import rodolfoPhoto from '../../assets/about/rodolfo-about.webp';
 import rodolfoEletricista from '../../assets/about/rodolfo-eletricista.webp';
+import { SectionBackdropFill } from '../SectionBackdrop/SectionBackdrop.styles';
 import {
 	AboutContainer,
 	Content,
@@ -16,6 +17,7 @@ export function About() {
 
 	return (
 		<AboutContainer id="quemsomos">
+			<SectionBackdropFill $elevated />
 			<Content>
 				<Title>Quem Somos</Title>
 				<Text>

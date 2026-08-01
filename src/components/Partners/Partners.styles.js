@@ -4,7 +4,8 @@ export const PartnerContainer = styled.section`
     width: 100%;
     padding: 96px 0;
 
-    background: ${(props) => props.theme.background};
+    position: relative;
+
     overflow: hidden;
 `;
 

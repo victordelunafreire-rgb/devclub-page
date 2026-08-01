@@ -35,12 +35,67 @@ export const Title = styled.h1`
     z-index: 1;
 
     font-family: ${(props) => props.theme.headingFont};
-    font-size: 72px;
+    font-size: 56px;
     font-weight: 700;
     color: ${(props) => props.theme.textPrimary};
     text-align: center;
+    line-height: 1.2;
 
     max-width: 900px;
+`;
+
+export const TitleLine = styled.span`
+    display: block;
+`;
+
+export const WhiteFlash = styled.div`
+    position: absolute;
+    inset: 0;
+
+    background: #ffffff;
+    opacity: 0;
+    transform-origin: center;
+
+    z-index: 1;
+    pointer-events: none;
+`;
+
+export const PinWrapper = styled.div`
+    position: absolute;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 90px;
+    height: 117px;
+
+    z-index: 1;
+`;
+
+export const PinSvg = styled.svg`
+    width: 100%;
+    height: 100%;
+
+    overflow: visible;
+`;
+
+export const PinHalo = styled.path`
+    fill: none;
+    stroke: ${(props) => props.theme.primary};
+    stroke-width: 10px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.4;
+    filter: blur(8px);
+`;
+
+export const PinCore = styled.path`
+    fill: none;
+    stroke: ${(props) => props.theme.primary};
+    stroke-width: 2.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 6px ${(props) => props.theme.primaryGlow});
 `;
 
 export const Signature = styled.p`
@@ -59,7 +114,7 @@ export const Signature = styled.p`
     }
 `;
 
-export const VideoBackground = styled.video`
+export const FrameCanvas = styled.canvas`
     position: absolute;
     top: 0;
     left: 0;
@@ -69,5 +124,4 @@ export const VideoBackground = styled.video`
     object-fit: cover;
 
     z-index: 0;
-    opacity: 0.4;
 `;
