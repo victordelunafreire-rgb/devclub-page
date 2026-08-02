@@ -5,10 +5,16 @@ export const StudentsContainer = styled.section`
     width: 100%;
 
     position: relative;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     padding: 128px 64px;
 
     background: ${(props) => props.theme.backgroundElevated};
+    perspective: 1500px;
 `;
 
 export const Title = styled.h2`
@@ -18,27 +24,33 @@ export const Title = styled.h2`
     color: ${(props) => props.theme.textPrimary};
 
     text-align: center;
-    margin-bottom: 64px;
-`;
 
-export const Grid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-
-    max-width: 1200px;
-    margin: 0 auto;
-
-    @media (max-width: 796px) {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-`;
-
-export const Card = styled.div`
     position: relative;
+    z-index: 2;
+`;
 
-    padding: 24px;
+export const SpiralLayer = styled.div`
+    position: absolute;
+    inset: 0;
+
+    transform-style: preserve-3d;
+    pointer-events: none;
+
+    z-index: 1;
+`;
+
+export const SpiralCard = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    will-change: transform, opacity;
+`;
+
+export const CardFrame = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
 
     background: ${(props) => props.theme.background};
     border: 1px solid ${(props) => props.theme.border};
@@ -47,9 +59,10 @@ export const Card = styled.div`
     &::after {
         content: '';
         position: absolute;
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         border: 2px solid ${(props) => props.theme.primary};
+        z-index: 1;
     }
 
     &::before {
@@ -68,8 +81,8 @@ export const Card = styled.div`
 `;
 
 export const Photo = styled.div`
-    width: 96px;
-    height: 128px;
+    width: 100%;
+    height: 100%;
 
     background-image: ${(props) =>
 			props.$photo
@@ -88,37 +101,46 @@ export const Photo = styled.div`
     background-position: center top;
 
     filter: grayscale(30%) contrast(1.1);
+`;
 
-    margin-bottom: 16px;
+export const Caption = styled.div`
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 10px 12px;
+
+    background: linear-gradient(
+        to top,
+        rgba(15, 14, 23, 0.95),
+        rgba(15, 14, 23, 0)
+    );
 `;
 
 export const Name = styled.h3`
     font-family: ${(props) => props.theme.headingFont};
-    font-size: 20px;
+    font-size: 15px;
     color: ${(props) => props.theme.textPrimary};
 
-    margin-bottom: 8px;
+    margin-bottom: 2px;
 `;
 
 export const DataRow = styled.p`
     font-family: ${(props) => props.theme.monoFont};
-    font-size: 13px;
-    color: ${(props) => props.theme.textSecondary};
-
-    span {
-        color: ${(props) => props.theme.primary}
-    }
+    font-size: 11px;
+    color: ${(props) => props.theme.primary};
 `;
 
 export const Stamp = styled.span`
     position: absolute;
-    top: -12px;
-    right: -12px;
+    top: 8px;
+    right: 8px;
 
-    padding: 4px 10px;
+    padding: 3px 7px;
 
     font-family: ${(props) => props.theme.monoFont};
-    font-size: 11px;
+    font-size: 9px;
     text-transform: uppercase;
 
     border: 1px dashed
@@ -126,5 +148,7 @@ export const Stamp = styled.span`
     color: ${(props) => (props.$hired ? props.theme.secondary : props.theme.primary)};
 
     transform: rotate(-8deg);
-    background: ${(props) => props.theme.background}
+    background: ${(props) => props.theme.background};
+
+    z-index: 2;
 `;

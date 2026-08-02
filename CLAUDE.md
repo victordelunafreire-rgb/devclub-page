@@ -88,9 +88,18 @@ Texto mantido como está no V1. O crossfade de foto (Rodolfo eletricista ↔ pro
 
 ### 4.4 Students (Alunos)
 
-Substituir grid estático atual por efeito de "espiral ascendente": cada posição/slot cicla entre múltiplas fotos ao longo do tempo (referência: site `/zeroz`, fotos tipo polaroid rotacionadas, ciclando de forma assíncrona entre si).
+Grid estático substituído por uma **hélice (espiral 3D) contínua de cards**, replicando a referência `otsuka-air.jp` (`/zeroz`).
 
-**Pendência de conteúdo:** expandir o pool de fotos de alunos além das 6 atuais — quantidade a definir para que o efeito de ciclagem funcione com variedade suficiente.
+**Comportamento:** os cards **giram em torno do eixo vertical central da página** enquanto sobem — vêm girando por trás do eixo, cruzam a frente (grandes e nítidos), voltam pro fundo (pequenos e escurecidos) e seguem subindo. Fluxo permanente em loop (autoplay), não dirigido por scroll — nada de `pin`/`scrub` nesta seção.
+
+- **O eixo precisa apontar pra câmera, não deitar no plano da tela.** Duas tentativas erradas antes de acertar: (1) interpolação reta de `x`/`y` entre dois pontos — puro deslize diagonal, sem espiral nenhuma; (2) órbita em torno de um eixo *diagonal deitado no plano da tela* — como o eixo é achatado em relação à câmera, orbitar em torno dele só produz uma oscilação lateral que o olho lê como "as imagens surgem e são sugadas pra cima", nunca como giro. O que funciona é orbitar o eixo **vertical central**: `x = sin(angle) * raio` (posição lateral em torno do eixo) e `z = cos(angle) * raio` (profundidade, em contrafase), com `y` subindo de forma independente e linear. Circunferência em `x`/`z` + subida em `y` = hélice ascendente de verdade.
+- **Teste de regressão:** amostrar a matriz de transform ao longo do tempo — `translateX` precisa **trocar de sinal várias vezes** (o card cruzando o eixo central de um lado pro outro), `translateZ` precisa oscilar em contrafase (frente/fundo), e `translateY` precisa subir monotonicamente, sem inversões. Se `x` não cruza o eixo repetidamente, não há giro.
+- **Pool:** 18 cards em voo (múltiplo de 6), cobrindo os 6 alunos existentes repetidos 3× (`students[index % students.length]`) — sem conteúdo novo.
+- **Motor da animação:** um único `gsap.to` sobre um objeto proxy (`{ value: 0 } → 1`, `repeat: -1`, `ease: 'none'`) cujo `onUpdate` recalcula e aplica a posição de todos os cards. Cada card lê o mesmo progresso deslocado pela sua fase (`(progress + index / CARD_COUNT) % 1`), ficando espaçado uniformemente ao longo da mesma hélice. Um tween só, em vez de um por card, mantém tudo em fase e o código explicável.
+- **Profundidade legível:** `perspective` no container (1500px) converte o `z` em tamanho aparente. Perspectiva curta demais faz os cards da frente ficarem gigantes e engolirem o título — 1500px equilibra profundidade visível e escala controlada. Além disso os cards do fundo são escurecidos proporcionalmente (`DEPTH_DIM`), reforçando que estão atrás do eixo, e `rotationY` acompanha a órbita pra eles virarem junto em vez de deslizarem de frente.
+- **Densidade:** ~12-13 cards visíveis por vez. Regulada por `CARD_COUNT` × raio da órbita × span de subida.
+- **Variação por card:** largura, altura e raio de órbita são derivados deterministicamente do índice (`(index * 137) % 180 - 90` etc.), nunca de `Math.random()` — layout estável entre re-renders.
+- **Legibilidade:** o título fica em `z-index` acima da camada de cards; o container tem `perspective` e a camada dos cards `transform-style: preserve-3d` (sem isso `z`/`rotationY` não produzem perspectiva real). Cada card carrega legenda compacta (nome + formação) sobre gradiente escuro, além do selo "Aprovado"/"Em jornada" — a seção continua comunicando resultados, não vira só textura.
 
 ### 4.5 Mentors (Tutores)
 
