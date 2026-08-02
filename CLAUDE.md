@@ -119,9 +119,31 @@ Grid estático substituído por um **leque (fan) de cards revelados por hover**,
 
 ### 4.6 Partners (Empresas Parceiras)
 
-Substituir a lista de empresas atual pela mesma lista usada na referência (`cinetica.studio`): Coca-Cola, Nissan, Netflix, Motorola, Mattel, The North Face, Kia, Nescafé, Duracell, Nestlé, Shark, Tecate, Mercado Pago, Duolingo, YouTube, Clase Azul — ou subconjunto equivalente. Objetivo: eliminar o problema de inconsistência de tamanho/formato entre logos que ocorreu no V1 usando exatamente o mesmo pool de referência.
+Marquee infinito do V1 substituído por **grid de células cíclicas**, referência `cinetica.studio`.
 
-Mecânica de exibição a especificar (era marquee infinito no V1 — avaliar se mantém ou se adota o modelo de "célula cíclica" descrito na seção 4.4/4.5, com itens entrando por baixo e empurrando os anteriores para cima, por célula, de forma assíncrona — referência `cinetica.studio`).
+**Mecânica:** grid fixo de células; cada célula troca de logo de forma **aleatória e individual** (nunca todas juntas). Na troca, o logo novo **nasce por baixo e sobe empurrando o antigo**, que sai por cima com um fade rápido. Um único agendador no componente pai sorteia qual célula troca e para qual logo — assim é impossível o mesmo logo aparecer em duas células ao mesmo tempo (o sorteio só considera marcas que não estão na tela).
+
+**Grid 5 × 2 = 10 células para um pool de 12 marcas:** a folga de 2 marcas é proposital e necessária — com pool igual ao número de células não sobra nenhuma marca "de reserva" pra entrar numa troca sem duplicar outra já visível.
+
+### Consistência visual entre logos (problema central do V1)
+
+No V1 os logos eram assets soltos com proporções de 1:1 (TOTVS 600×600) a 4,3:1 (SVGs 240×56) — uma variação de 4× — em 3 formatos diferentes (SVG/PNG/AVIF), alguns em resolução baixa (`santander-logo.png` 265×148, que borra ao escalar). Nenhum layout corrige isso; a inconsistência está no asset.
+
+**Princípio:** consistência e fidelidade de marca não são conflitantes, porque as três variáveis que quebram a consistência são todas separáveis do desenho da marca:
+
+1. **Cor → monocromático branco.** Maior alavanca, e **não descaracteriza**: praticamente todo manual de marca publica uma versão de cor única / reversa / knockout exatamente para fundos escuros e paredes de parceiros. Usar essa variante é seguir o manual, não violá-lo — e é o que a referência faz (todos os logos em branco chapado).
+2. **Bounding box → célula fixa + `object-fit: contain`.** A proporção de cada marca é preservada exatamente; a célula é só um envelope máximo. Nunca esticar, nunca `fill`.
+3. **Peso óptico → fator de escala por logo.** Mesmo com `contain`, um selo circular (BMW) na altura cheia da célula pesa muito mais que um wordmark fino (Netflix). **Bounding box igual ≠ tamanho percebido igual.** Por isso existe um multiplicador por marca no `Partners.data.js`.
+
+**Como calibrar a escala (não é no olho):** todos os ícones do Simple Icons compartilham um `viewBox` quadrado 24×24, então definir a altura define a **caixa**, não o desenho visível — um wordmark largo (Coca-Cola, Kia) só ocupa uma faixa central dessa caixa e por isso aparenta ser bem menor que um selo que preenche o quadrado inteiro. A calibração correta mede a **tinta visível** de cada marca com `svg.getBBox()` convertido pra pixels de tela, e ajusta a escala em cima disso. Sem essa medição, os valores parecem certos no código e saem visivelmente desiguais na tela: antes da calibração a altura visível ia de 18px (Kia) a 76px (Netflix), quase 4× de diferença.
+
+**Alvo de proporção (espelhando a referência):** wordmarks largos ~120-130px de largura visível, selos ~77-90px. `LOGO_BASE_SIZE` (76px) é a caixa base e `CELL_HEIGHT` (132px) precisa acomodar a maior caixa depois da escala — hoje a do Kia, com 130px.
+
+**Fonte dos logos:** `react-icons/si` (Simple Icons) — **já é dependência do projeto** e já usada em `Programs.jsx`. Resolve as três alavancas de uma vez: renderiza em `currentColor` (normalização pra branco sai de graça, sem hack de `filter`), `viewBox` uniforme 24×24 já balanceado opticamente, vetor (nítido em qualquer tamanho), zero asset novo e zero requisição de imagem.
+
+**Pool final — as 12 marcas disponíveis no Simple Icons:** Netflix, YouTube, Coca-Cola, Duolingo, Mercado Pago, BMW, Nissan, Motorola, Kia, The North Face, Spotify, Aeroméxico. As demais da referência (Nestlé, Mattel, Duracell, Nescafé, Doritos, Tecate, Shark, Clase Azul) **ficam de fora de propósito** — incluí-las exigiria assets externos avulsos, reintroduzindo exatamente a mistura de formato/resolução que quebrou o V1.
+
+**Texto da seção:** o título deixa de afirmar parceria com essas marcas (era "+300 empresas parceiras"). Como são empresas reais num site público, a chamada passa a falar do destino dos alunos, não de uma relação comercial entre DevClub e as marcas.
 
 ### 4.7 CTA
 
@@ -170,5 +192,5 @@ About e Footer não requerem trabalho nesta revisão.
 
 - ~~Quantidade final de fotos de alunos para o efeito de espiral~~ — resolvido: reaproveitar os 6 alunos existentes (ver 4.4)
 - ~~Quantidade e identidade dos novos mentores a adicionar~~ — resolvido: reaproveitar os 4 tutores existentes para formar os 8 cards do leque (ver 4.5)
-- Mecânica final de exibição do Partners (marquee vs. célula cíclica)
+- ~~Mecânica final de exibição do Partners (marquee vs. célula cíclica)~~ — resolvido: célula cíclica (ver 4.6)
 - Efeitos adicionais leves ao longo da página (mencionados como possibilidade, natureza ainda não definida — nada no nível de complexidade do Hero)

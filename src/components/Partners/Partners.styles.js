@@ -1,4 +1,5 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { CELL_HEIGHT, LOGO_BASE_SIZE, PARTNER_COLUMNS } from './Partners.data';
 
 export const PartnerContainer = styled.section`
     width: 100%;
@@ -12,54 +13,52 @@ export const PartnerContainer = styled.section`
 
 export const Title = styled.h2`
     font-family: ${(props) => props.theme.headingFont};
-    font-size:32px;
+    font-size: 32px;
     color: ${(props) => props.theme.textSecondary};
 
     text-align: center;
     margin-bottom: 48px;
 `;
 
-const scroll = keyframes`
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
+export const Grid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(${PARTNER_COLUMNS}, 1fr);
+    gap: 48px 32px;
+
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+
+    @media (max-width: 796px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px 16px;
     }
 `;
 
-export const Track = styled.div`
-    display: flex;
-    width: fit-content;
-
-    animation: ${scroll} 30s linear infinite;
+// The cell is a fixed envelope and clips its contents, which is what lets the
+// incoming logo rise from below and the outgoing one leave through the top.
+export const Cell = styled.div`
+    position: relative;
+    height: ${CELL_HEIGHT}px;
+    overflow: hidden;
 `;
 
-export const LogoWrapper = styled.div`
+export const LogoLayer = styled.div`
+    position: absolute;
+    inset: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    min-width: 200px;
-    height: 80px;
-    margin: 0 32px;
+    color: ${(props) => props.theme.textPrimary};
 
-    img {
-        height: 48px;
-        width: auto
+    svg {
+        /* Simple Icons share a square viewBox, so the box is sized on one axis
+           and the mark keeps its own proportions inside it — nothing is ever
+           stretched; the scale only corrects perceived weight. */
+        height: ${(props) => LOGO_BASE_SIZE * (props.$scale ?? 1)}px;
+        width: auto;
+        max-width: 100%;
     }
-`;
-
-export const Wordmark = styled.p`
-    font-family: ${(props) => props.theme.monoFont};
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-
-    color: ${(props) => props.theme.textSecondary};
-    padding: 8px 16px;
-
-    border: 1px solid ${(props) => props.theme.border};
-    border-radius: 4px;
 `;
