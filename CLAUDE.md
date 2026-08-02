@@ -103,9 +103,19 @@ Grid estático substituído por uma **hélice (espiral 3D) contínua de cards**,
 
 ### 4.5 Mentors (Tutores)
 
-Cards iniciam espalhados de forma aleatória na tela (posição/rotação randômica, estilo polaroids jogadas sobre uma mesa) e se alinham à posição de grid final conforme o usuário rola a página (`ScrollTrigger` animando `x`/`y`/`rotation` de estado aleatório para posição final).
+Grid estático substituído por um **leque (fan) de cards revelados por hover**, referência `landonorris.com` (seção "ON SOCIALS").
 
-**Pendência de conteúdo:** adicionar mentores novos — o número de formações (`Programs`) foi expandido de 4 para 8 na revisão do V1, mas o número de mentores não foi atualizado proporcionalmente.
+**Esta spec substitui a anterior** ("cards espalhados aleatoriamente se alinhando ao grid conforme o scroll"), abandonada junto com a entrada por scroll: toda a animação da seção agora vive na interação de clique, não no scroll.
+
+- **Geometria do leque:** os 8 cards ficam todos ancorados no mesmo ponto (base, centro horizontal) e recebem **apenas uma rotação** cada, em torno de um `transformOrigin` bem **abaixo** do card (`50% 420%`). Girar em torno de um pivô distante produz de uma vez só a posição horizontal, a queda vertical das pontas e a inclinação — é o que gera o arco do leque sem precisar posicionar card por card. O leque abre de `-26°` a `+26°`.
+- **Hover destaca no lugar — o leque NÃO reordena.** Passar o mouse sobre um card já revela o efeito: ele cresce (`scale`), vai pro topo do empilhamento e sai do estado esmaecido, mas **mantém sua posição e rotação originais no arco**. Não migra pra posição central. (Interpretação inicial errada e corrigida pelo desenvolvedor: chegou a ser especificado que o card iria pro centro com o leque reorganizando ao redor — não é isso que a referência faz.)
+- **Sem clique e sem `cursor: pointer`.** A referência não anuncia os cards como alvo de clique — o cursor permanece neutro (`cursor: default`) e o efeito é puramente de passagem do mouse, o que deixa a interação mais sutil. O `onClick` continua registrado apenas como fallback pra dispositivos de toque, que não têm hover; `onFocus` cobre navegação por teclado.
+- **Seleção é persistente:** o último card destacado continua destacado quando o mouse sai do leque, em vez de voltar ao estado inicial — evita o pisca-pisca de um reset a cada saída do mouse.
+- **Empilhamento:** `z-index` cresce conforme a proximidade do card selecionado, e o selecionado recebe o valor máximo — assim o destaque nunca fica parcialmente coberto por um vizinho.
+- **Info só no card selecionado:** nome, função, barras de stats e a tag `P#` aparecem apenas no card ativo (sobre um gradiente escuro na base do card); os demais mostram só a foto. Preserva a identidade "player card" do V1 sem poluir o leque, já que a sobreposição esconderia esse conteúdo de qualquer forma.
+- **Conteúdo:** 8 cards reaproveitando os 4 tutores existentes (`mentors[index % mentors.length]`) — mesma abordagem usada em Students, sem conteúdo novo. Isso **encerra a pendência** que constava na seção 7 (adicionar tutores novos para acompanhar a expansão de 4 → 8 formações).
+- **Sem entrada especial:** o leque já aparece montado, com fade discreto. Nada de `ScrollTrigger` nesta seção.
+- **Acessibilidade:** cada card é um `<button>` de verdade (não um `div`), com `aria-pressed` e `aria-label` descritivo. Como o efeito é por hover, `onFocus` espelha o `onMouseEnter` — assim quem navega por teclado percorre os tutores com Tab e vê a mesma revelação.
 
 ### 4.6 Partners (Empresas Parceiras)
 
@@ -158,7 +168,7 @@ About e Footer não requerem trabalho nesta revisão.
 
 ## 7. Perguntas em aberto (não assumir, confirmar com o desenvolvedor antes de implementar)
 
-- Quantidade final de fotos de alunos para o efeito de espiral
-- Quantidade e identidade dos novos mentores a adicionar
+- ~~Quantidade final de fotos de alunos para o efeito de espiral~~ — resolvido: reaproveitar os 6 alunos existentes (ver 4.4)
+- ~~Quantidade e identidade dos novos mentores a adicionar~~ — resolvido: reaproveitar os 4 tutores existentes para formar os 8 cards do leque (ver 4.5)
 - Mecânica final de exibição do Partners (marquee vs. célula cíclica)
 - Efeitos adicionais leves ao longo da página (mencionados como possibilidade, natureza ainda não definida — nada no nível de complexidade do Hero)
