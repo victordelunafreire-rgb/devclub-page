@@ -16,6 +16,10 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .env
+
+# Local MCP server config: holds the GEMINI_API_KEY
+.mcp.json
+
 .idea
 .DS_Store
 *.suo
