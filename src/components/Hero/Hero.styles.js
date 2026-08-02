@@ -21,10 +21,10 @@ export const GlowBackground = styled.div`
     transform: translateX(-50%);
 
     width: 600px;
-    height: 400px;
+    height: 500px;
 
     background: ${(props) => props.theme.primary};
-    opacity: 0.25;
+    opacity: 0.50;
     filter: blur(120px);
 
     border-radius: 50%;
