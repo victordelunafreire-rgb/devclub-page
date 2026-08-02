@@ -21,7 +21,8 @@ import {
 	Title,
 } from './Mentors.styles';
 
-const CARD_COUNT = 8;
+const CARD_COUNT = mentors.length;
+const CENTRE_INDEX = Math.floor(CARD_COUNT / 2);
 const FAN_SPREAD = 52;
 
 // Rotating around a pivot placed well below the card turns a single rotation
@@ -32,11 +33,19 @@ const FAN_PIVOT = '50% 420%';
 const SELECTED_SCALE = 1.12;
 const IDLE_BRIGHTNESS = 0.62;
 
-// 8 cards from the 4 existing mentors, each appearing twice.
-const fanMentors = Array.from(
-	{ length: CARD_COUNT },
-	(_, index) => mentors[index % mentors.length],
-);
+// One card per mentor, ordered so the founder (id 0) always lands on the fan's
+// middle slot — the one that starts selected — with everyone else filling the
+// slots around him in their declared order.
+const fanMentors = (() => {
+	const founder = mentors.find((mentor) => mentor.id === 0);
+	const others = mentors.filter((mentor) => mentor.id !== 0);
+
+	return [
+		...others.slice(0, CENTRE_INDEX),
+		founder,
+		...others.slice(CENTRE_INDEX),
+	];
+})();
 
 const fanAngle = (index) =>
 	-FAN_SPREAD / 2 + (FAN_SPREAD / (CARD_COUNT - 1)) * index;
@@ -46,7 +55,7 @@ export function Mentors() {
 	const slotRefs = useRef([]);
 	const cardRefs = useRef([]);
 	const detailRefs = useRef([]);
-	const [selected, setSelected] = useState(Math.floor(CARD_COUNT / 2));
+	const [selected, setSelected] = useState(CENTRE_INDEX);
 
 	useGSAP(
 		() => {
