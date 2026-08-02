@@ -8,8 +8,10 @@ export const StudentsContainer = styled.section`
     overflow: hidden;
 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* Anchored to the top-left corner: the cards orbit the middle of the
+       section, so a centred title would sit right on their path. */
+    align-items: flex-start;
+    justify-content: flex-start;
 
     padding: 128px 64px;
 
@@ -23,7 +25,7 @@ export const Title = styled.h2`
     font-weight: 700;
     color: ${(props) => props.theme.textPrimary};
 
-    text-align: center;
+    text-align: left;
 
     position: relative;
     z-index: 2;
