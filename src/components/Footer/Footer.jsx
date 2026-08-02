@@ -1,3 +1,4 @@
+import { FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import {
 	ColumnTitle,
 	Content,
@@ -6,7 +7,27 @@ import {
 	FooterLink,
 	LinkColumn,
 	Logo,
+	SocialLink,
+	SocialRow,
 } from './Footer.styles';
+
+const socials = [
+	{
+		name: 'Instagram',
+		icon: FaInstagram,
+		href: 'https://www.instagram.com/rodolfomorii',
+	},
+	{
+		name: 'YouTube',
+		icon: FaYoutube,
+		href: 'https://www.youtube.com/@canaldevclub',
+	},
+	{
+		name: 'LinkedIn',
+		icon: FaLinkedinIn,
+		href: 'https://www.linkedin.com/search/results/all/?keywords=Dev%20Club&origin=RICH_QUERY_SUGGESTION&heroEntityKey=urn%3Ali%3Aorganization%3A74680005&position=0',
+	},
+];
 
 export function Footer() {
 	return (
@@ -26,27 +47,20 @@ export function Footer() {
 
 				<LinkColumn>
 					<ColumnTitle>Redes</ColumnTitle>
-					<FooterLink
-						href="https://www.instagram.com/rodolfomorii"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Instagram
-					</FooterLink>
-					<FooterLink
-						href="https://www.youtube.com/@canaldevclub"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						YouTube
-					</FooterLink>
-					<FooterLink
-						href="https://www.linkedin.com/search/results/all/?keywords=Dev%20Club&origin=RICH_QUERY_SUGGESTION&heroEntityKey=urn%3Ali%3Aorganization%3A74680005&position=0"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						LinkedIn
-					</FooterLink>
+					<SocialRow>
+						{socials.map((social) => (
+							<SocialLink
+								key={social.name}
+								href={social.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={social.name}
+								title={social.name}
+							>
+								<social.icon size={18} />
+							</SocialLink>
+						))}
+					</SocialRow>
 				</LinkColumn>
 			</Content>
 

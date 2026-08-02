@@ -153,9 +153,16 @@ No V1 os logos eram assets soltos com proporções de 1:1 (TOTVS 600×600) a 4,3
 
 Mantém estrutura V1 (logo, nav, CTA, menu mobile). Nova regra: invisível/oculto até a transição completa do Hero terminar (frame-scroll + tipografia + assinatura) — implementado via o hook compartilhado `useHeroCompleteFade` (ver seção 3), mesma fonte de verdade usada pela cápsula de progresso.
 
+**Hover dos links de navegação (referência: MBA DevClub):** ao passar o mouse, o link exibe um contorno em formato de pílula (`border-radius: 999px`) na cor `primary`, e o texto clareia pra `textPrimary`. Na referência esse contorno é azul; aqui usa o laranja da identidade.
+
+**Regra pra não causar reflow:** a borda existe **sempre**, apenas `transparent` no estado ocioso — só a cor muda no hover. Se a borda (ou o padding) fosse adicionada só no `:hover`, cada passagem do mouse empurraria os links vizinhos. Como os links passaram a ter padding horizontal próprio, o `gap` do `Nav` foi reduzido de 40px pra 8px, mantendo o espaçamento visual entre os rótulos igual ao de antes.
+
 ### 4.9 Footer
 
-**Sem alterações.**
+Estrutura V1 mantida, com dois ajustes:
+
+- **Mesmo hover de pílula dos links do Header** (mesma regra de borda sempre presente / transparente no ocioso). O `ColumnTitle` recebeu o mesmo `padding-left` dos links pra a coluna continuar alinhada, e os links usam `align-self: flex-start` pra a pílula envolver só o texto em vez de esticar na largura da coluna.
+- **Redes sociais viraram ícones** (`react-icons/fa`) em botões circulares, no lugar dos links de texto — referência MBA DevClub. Como são links sem texto visível, cada um leva `aria-label` e `title` com o nome da rede.
 
 ---
 

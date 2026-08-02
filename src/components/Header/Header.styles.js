@@ -32,7 +32,9 @@ export const Logo = styled.p`
 export const Nav = styled.nav`
     display: flex;
     align-items: center;
-    gap: 40px;
+    /* The links carry their own horizontal padding now, so the gap is reduced
+       to keep the spacing between labels the same as before. */
+    gap: 8px;
 
     @media (max-width: 796px) {
         display: none;
@@ -42,10 +44,21 @@ export const Nav = styled.nav`
 export const NavLink = styled.a`
     font-size: 16px;
     color: ${(props) => props.theme.textSecondary};
+
+    /* The pill is always present, only transparent when idle, so hovering
+       never shifts the layout. */
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+
     transition: ${(props) => props.theme.transitionDefault};
 
     &:hover {
-        color: ${(props) => props.theme.textPrimary};
+        background: ${(props) => props.theme.primary};
+        border-color: ${(props) => props.theme.primary};
+        /* Dark text on the filled pill, same contrast pairing as the CTA. */
+        color: ${(props) => props.theme.background};
     }
 `;
 

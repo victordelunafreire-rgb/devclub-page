@@ -59,18 +59,61 @@ export const ColumnTitle = styled.p`
     letter-spacing: 1px;
     color: ${(props) => props.theme.textSecondary};
 
+    /* Matches the links' own padding so the column stays visually aligned. */
+    padding-left: 16px;
     margin-bottom: 8px;
 `;
 
 export const FooterLink = styled.a`
+    /* Hugs its own text instead of stretching the column, so the pill outline
+       wraps the label rather than the whole width. */
+    align-self: flex-start;
+
     font-size: 14px;
     color: ${(props) => props.theme.textSecondary};
-    transition: ${(props) => props.theme.transitionDefault};
     cursor: pointer;
 
+    /* Same idle-transparent pill as the header, so hovering never reflows. */
+    padding: 6px 16px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+
+    transition: ${(props) => props.theme.transitionDefault};
 
     &:hover {
-        color: ${(props) => props.theme.textPrimary};
+        background: ${(props) => props.theme.primary};
+        border-color: ${(props) => props.theme.primary};
+        color: ${(props) => props.theme.background};
+    }
+`;
+
+export const SocialRow = styled.div`
+    display: flex;
+    gap: 12px;
+
+    padding-left: 16px;
+`;
+
+export const SocialLink = styled.a`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: ${(props) => props.theme.textSecondary};
+    border: 1px solid ${(props) => props.theme.border};
+    background: transparent;
+
+    transition: ${(props) => props.theme.transitionDefault};
+
+    &:hover {
+        background: ${(props) => props.theme.primary};
+        border-color: ${(props) => props.theme.primary};
+        color: ${(props) => props.theme.background};
     }
 `;
 
