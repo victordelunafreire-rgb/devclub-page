@@ -6,7 +6,8 @@ export const ProgramsContainer = styled.section`
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+
+    padding-top: 110px;
 
     overflow: hidden;
     position: relative;
@@ -20,6 +21,16 @@ export const ProgramsContainer = styled.section`
     };
 `;
 
+export const ParticlesArea = styled.div`
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+
+    pointer-events: none;
+`;
+
 export const Title = styled.h2`
     font-family: ${(props) => props.theme.headingFont};
     font-size: 48px;
@@ -30,36 +41,37 @@ export const Title = styled.h2`
     margin-bottom: 64px;
 `;
 
-export const Track = styled.div`
+export const CardStack = styled.div`
     display: flex;
-    gap: 40px;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
 
     padding-left: 64px;
-    padding-right: 64px;
-
-    width: fit-content;
+    max-width: 480px;
 
     @media (max-width: 768px) {
-        width: 100%;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
         padding-left: 24px;
         padding-right: 24px;
-        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+        gap: 16px;
     }
 `;
 
+export const CardReveal = styled.div``;
+
 export const Card = styled.div`
     position: relative;
-    flex-shrink: 0;
-    width: 380px;
-    padding: 40px;
+    width: 100%;
+    height: 150px;
+    padding: 28px;
+    overflow: hidden;
 
     background: ${(props) => props.theme.backgroundElevated};
     border: 1px solid ${(props) => props.theme.border};
     border-radius: 16px;
 
-    transition: ${(props) => props.theme.transitionDefault};
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     transform-origin: center;
 
     &:hover {
@@ -67,39 +79,56 @@ export const Card = styled.div`
         border-color: ${(props) => props.theme.primary};
         box-shadow: 0 20px 40px rgba(255, 107, 74, 0.25);
         z-index: 1;
-        position: relative;
     }
 
-    @media (max-width: 768px) {
-        scroll-snap-align: center;
+    @media (max-width: 796px) {
+        height: auto;
     }
 `;
 
 export const IconWrapper = styled.div`
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 14px;
+    right: 14px;
 
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
+
+    filter: drop-shadow(0 0 8px ${(props) => props.theme.primaryGlow})
+`;
+
+export const IconGlyph = styled.div`
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const CheckBadge = styled.div`
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    filter: drop-shadow(0 0 8px ${(props) => props.theme.primaryGlow})
+    background: ${(props) => props.theme.primary};
+    color: ${(props) => props.theme.background};
 `;
 
 export const CardTitle = styled.h3`
     font-family: ${(props) => props.theme.headingFont};
-    font-size: 28px;
+    font-size: 24px;
     color: ${(props) => props.theme.primary};
 
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 `;
 
 export const CardDescription = styled.p`
-    font-size: 17px;
+    font-size: 16px;
     color: ${(props) => props.theme.textSecondary};
     line-height: 1.5;
 `;
