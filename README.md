@@ -1,74 +1,92 @@
-# DevClub — Página Institucional
+# DevClub — Página Institucional (V2)
 
-Página institucional criada para o concurso de vaga de Programador(a) Full Stack do DevClub, proposto por Rodolfo Mori. O desafio: construir uma página disruptiva que apresente a marca, as formações, os alunos, os parceiros e os tutores — com liberdade total de dados e tecnologia.
+Projeto desenvolvido como submissão para a vaga de Programador Full Stack no DevClub, avaliado por Rodolfo Mori. Esta é a segunda versão (V2), reformulada com animações mais avançadas após feedback sobre a primeira submissão.
 
-🔗 **Página publicada:** [devclub-page.vercel.app](https://devclub-page.vercel.app)
-🔗 **Repositório:** este mesmo repositório
+🔗 **[Ver ao vivo](https://devclub-page.vercel.app/)**
 
 ---
 
-## Sobre o projeto
+## Versões
 
-O conceito visual combina uma estética dark com glow em coral/laranja — pensada para ser marcante como a identidade do DevClub, mas acolhedora o suficiente para não intimidar quem está começando do zero na programação. A página mistura storytelling (a jornada de quem entrou sem saber nada) com prova social gamificada (fichas de RPG para alunos, seleção de personagem estilo fighting game para tutores).
+- **V2 (atual, em produção)** — branch `main`: versão reformulada com frame-scroll no Hero, transição controlada no About, progressão de cards no Formations, e demais animações avançadas descritas no `CLAUDE.md`.
+- **V1 (submissão original)** — [branch `v1`](https://github.com/victordelunafreire-rgb/devclub-page/tree/v1) / [tag `v1.0-submission`](https://github.com/victordelunafreire-rgb/devclub-page/releases/tag/v1.0-submission): primeira versão entregue, mantida para referência histórica.
+
+---
 
 ## Stack técnica
 
-- **React + Vite**
-- **Styled Components** — estilização e temas
-- **GSAP + ScrollTrigger** — animações de entrada e scroll horizontal pinado
-- **Swiper** — carrossel de formações (versão inicial)
-- **Canvas API** — sistema de partículas ambiente (fundo animado da seção Formações)
-- **react-icons** — ícones de tecnologia
+- **React** + **Vite**
+- **Styled Components** — estilização
+- **GSAP** + **ScrollTrigger** — animações e efeitos de scroll
 - **Biome** — lint e formatação
+- **Yarn** — gerenciador de pacotes
+
+---
 
 ## Como rodar localmente
 
 ```bash
-git clone <url-do-repositorio>
-cd devclub-page
 yarn install
 yarn dev
 ```
 
-Acesse `http://localhost:5173`.
-
 ---
 
-## Screenshots
+## Seções do projeto
 
-### Hero
-![Hero](src/assets/README/Hero.png)
+Cada seção abaixo tem um vídeo curto demonstrando os efeitos, sem necessidade de rodar o projeto localmente.
+
+
+### Hero (abertura)
+<video src="src/assets/README/devclub-intro.mov" controls width="600"></video>
 
 ### Quem Somos
-![About](src/assets/README/About.png)
+![Quem Somos](src/assets/README/devclub_about.png)
 
 ### Formações
-Scroll horizontal pinado via GSAP ScrollTrigger — a seção prende a tela enquanto os cards deslizam lateralmente.
-
-![Formações - estado inicial](src/assets/README/Programs-1.png)
-![Formações - scroll em andamento](src/assets/README/Programs-2.png)
+<video src="src/assets/README/devclub_formations.mov" controls width="600"></video>
 
 ### Alunos
-![Students](src/assets/README/Students.png)
+<video src="src/assets/README/devclub_students.mov" controls width="600"></video>
 
 ### Empresas Parceiras
-![Partners](src/assets/README/Partners.png)
+<video src="src/assets/README/devclub_partners.mov" controls width="600"></video>
 
 ### Tutores
-![Mentors](src/assets/README/Mentors.png)
+<video src="src/assets/README/devclub_tutors.mov" controls width="600"></video>
 
-### CTA Final e Footer
-![CTA](src/assets/README/CTA.png)
+### CTA + Footer
+![CTA e Footer](src/assets/README/devclub_footer.png)
 
 ---
 
-## Decisões técnicas
+## Pipeline de mídia gerada por IA
 
-- **Idioma:** código (variáveis, componentes, commits) em inglês; conteúdo visível ao usuário em português.
-- **Estilo de props:** props transientes prefixadas com `$` (padrão Styled Components) para evitar vazamento de atributos não-HTML para o DOM.
-- **Responsividade:** testada e ajustada para viewport mobile (390px), incluindo menu hambúrguer no header, grids reempilhados e scroll horizontal adaptado para touch no mobile (sem pin/scrub, que é instável em dispositivos touch).
+A sequência de abertura do Hero (imagem-âncora + vídeo animado, técnica de frame-scroll) foi produzida com um pipeline próprio:
 
-## Autor
+1. **Geração de imagem** — Gemini (Nano Banana)
+2. **Geração de vídeo** — Gemini (Veo), a partir da imagem-âncora
+3. **Pós-processamento** — remoção de marca d'água via inpainting (Python/OpenCV) e fatiamento em frames com **FFmpeg**
+4. **Integração** — frames sincronizados ao scroll via GSAP ScrollTrigger, renderizados em `<canvas>`
 
-Victor de Luna Freire
-[LinkedIn](www.linkedin.com/in/victordelunafreire) · [GitHub](https://github.com/victordelunafreire-rgb)
+---
+
+## Referências visuais e de efeito
+
+- [landonorris.com](https://landonorris.com)
+- [mbadevclub.com.br](https://mbadevclub.com.br)
+- [cinetica.studio](https://cinetica.studio)
+- [otsuka-air.jp](https://otsuka-air.jp)
+
+---
+
+## Desenvolvimento
+
+Construído em parceria com **Claude Code** (Anthropic) para a implementação técnica, com direção de arte, decisões de produto e validação de cada etapa por Victor de Luna Freire.
+
+---
+
+## Contato
+
+- LinkedIn: [victordelunafreire](www.linkedin.com/in/victordelunafreire)
+- GitHub: [@victordelunafreire-rgb](www.github.com/victordelunafreire-rgb)
